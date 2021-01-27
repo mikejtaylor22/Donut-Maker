@@ -4,11 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 4 Project</title>
+    <link rel="stylesheet" type="text/css" href="/src/css/style.css">
+    <script src="./src/js/multiplier.js"></script>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#">Fred the Baker Co.</a></li>
+            <li><a href="#">Inspiration</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
         <div class="anchor"></div>
+        <section>
+            <p id="counter"></p>
+            <button type="submit" id="addDonutButton">Make Donut</button>
+            <span id="multiplierDisplay"></span>
+            <br>
+            <br>
+            <div>
+                <button type="submit" id="purchaseAutoClicker">Purchase Auto Clicker</button>
+                <br>
+                <span id="autoClickerPrice"></span>
+                <br>
+                <br>
+                <button type="submit" id="purchaseDonutMultiplier">Purchase Donut Multiplier</button>
+                <br>
+                <span id="multiplierPrice"></span>
+            </div>
+        </section>
+        
+        <div class="items">
+            <p>Number of Multipliers: </p>
+            <span id="multiplierCount"></span>
+            <br>
+            <button class="toggleContent" id="multiplierUseButton">Use Multiplier</button>
+            <hr>
+            <br>
+            <p>Number of Auto Clickers: </p>
+            <span id="autoClickerCount"></span>
+            <br>
+            <button class="toggleContent" id="autoClickerUseButton">Use Auto Clicker</button>
+        </div>
+        
     </div>
-    <script src="/src/app.js"></script>
+    <script src="./src/js/app.js" type="module"></script>
 </body>
 </html>

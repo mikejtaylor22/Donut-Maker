@@ -1,0 +1,8 @@
+
+.toggleContent {
+	display: none;
+}
+
+.toggleContent.is-visible {
+	display: block;
+}
