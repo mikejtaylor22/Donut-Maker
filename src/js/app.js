@@ -20,9 +20,9 @@ document.querySelector("#autoClickerPrice").innerHTML = 'Price: ' + autoClickerO
 document.querySelector("#multiplierPrice").innerHTML = 'Price: ' + donutMultiplierObj.price;
 
 document.querySelector("#multiplierDisplay").innerHTML = 'x' + donutMultiplierObj.multiplier;
+document.querySelector('#getJoke').disabled=true;
 
 
-  
 
   function enableAutoClickerBtn() {
     document.getElementById("purchaseAutoClicker").disabled = false;
@@ -44,6 +44,10 @@ document.getElementById("addDonutButton").onclick = function addDonut(){
     console.log('donut count = ' + donutCount);
     document.getElementById("counter").innerHTML = getDonutCount();
     enablePurchaseButtons();
+    if(donutCount >= 5000){
+        document.querySelector('#getJoke').disabled=false;
+    }
+    
 }
 
 function enablePurchaseButtons(){
@@ -56,6 +60,9 @@ function enablePurchaseButtons(){
         enableAutoClickerBtn();
     } else {
         document.getElementById("purchaseAutoClicker").disabled = true;
+    }
+    if(donutCount >= 5000){
+        document.querySelector('#getJoke').disabled=false;
     }
 }
 
@@ -133,4 +140,44 @@ document.querySelector("#autoClickerUseButton").onclick = () =>{
 function getDonutCount(){
     return donutCount;
 }
+
+let userAction = async () => {
+    
+    console.log("getting joke! appjs")
+    let response = await fetch('https://icanhazdadjoke.com', {
+      method: 'GET',
+    //   body: myBody, // string or object
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    let myJson = await response.json(); //extract JSON from the http response
+    // do something with myJson
+    
+    let myJoke = myJson.joke;
+    
+    document.querySelector('#displayJoke').innerHTML=myJoke;
+    
+  }
+
+
+
+//   document.querySelector('#getJoke').onclick=userAction;
+
+  document.querySelector('#getJoke').onclick= () =>{
+    userAction();
+      donutCount -=5000;
+      console.log(donutCount);
+      document.getElementById("counter").innerHTML = donutCount;
+      if(donutCount < 5000){
+        document.querySelector('#getJoke').disabled=true;
+      } else {
+        document.querySelector('#getJoke').disabled=false;
+      }
+  }
+
+  document.querySelector('#jokePrice').innerHTML=("Price: 5000")
+ 
+
+
 
