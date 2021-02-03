@@ -6,3 +6,45 @@
 .toggleContent.is-visible {
 	display: block;
 }
+
+.container{
+	display: flex;
+	justify-content: center;
+}
+
+.container2{
+	display: flex;
+	justify-content: right;
+}
+
+body{
+	background-color:burlywood
+}
+
+.navclass{
+	display: grid;
+	justify-self: start;
+}
+
+button{
+	max-width: 80px;
+	max-height: 80px;
+	min-width: 80px;
+	min-height: 80px;
+}
+
+.inventory{
+	display: flex;
+	justify-content: right;
+	padding: 5px;
+}
+
+.jokediv{
+	display: flex;
+}
+
+footer{
+	position:absolute;
+	bottom: 0;
+	
+}

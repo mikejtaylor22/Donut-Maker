@@ -1,183 +1,146 @@
-import {donutMultiplierClass} from './multiplier.js';
-import {autoClickerClass} from './autoclicker.js';
-let donutMultiplierObj = new donutMultiplierClass(0,10,0)
-let autoClickerObj = new autoClickerClass(0,100)
+import { donutMultiplierClass } from "./multiplier.js";
+import { autoClickerClass } from "./autoclicker.js";
+
+let donutMultiplierObj = new donutMultiplierClass(0, 10, 0);
+let autoClickerObj = new autoClickerClass(0, 100);
 
 let donutCount = 0;
 
-//disable purchase buttons from start
-function disablePurchaseButtons(){
-document.getElementById("purchaseAutoClicker").disabled = true;
-document.getElementById("purchaseDonutMultiplier").disabled = true;
+function disablePurchaseButtons() {
+  purchaseAutoButton.disabled = true;
+  purchaseMultiplierButton.disabled = true;
 }
 disablePurchaseButtons();
 
 //displays the counts on the page
-document.getElementById("multiplierCount").innerHTML = donutMultiplierObj.amount;
-document.getElementById("autoClickerCount").innerHTML = autoClickerObj.amount;
+multiplierCount.innerHTML = donutMultiplierObj.amount;
+autoClickerCount.innerHTML = autoClickerObj.amount;
 
-document.querySelector("#autoClickerPrice").innerHTML = 'Price: ' + autoClickerObj.price;
-document.querySelector("#multiplierPrice").innerHTML = 'Price: ' + donutMultiplierObj.price;
+autoClickerPrice.innerHTML = "Price: " + autoClickerObj.price;
+multiplierPrice.innerHTML = "Price: " + donutMultiplierObj.price;
 
-document.querySelector("#multiplierDisplay").innerHTML = 'x' + donutMultiplierObj.multiplier;
-document.querySelector('#getJoke').disabled=true;
+multiplierDisplay.innerHTML = "x" + donutMultiplierObj.multiplier;
+getJokeButton.disabled = true;
 
+function enableAutoClickerBtn() {
+  purchaseAutoButton.disabled = false;
+}
 
+function enableMultiplierBtn() {
+  purchaseMultiplierButton.disabled = false;
+}
 
-  function enableAutoClickerBtn() {
-    document.getElementById("purchaseAutoClicker").disabled = false;
+addDonutButton.onclick = function addDonut() {
+  if (!donutMultiplierObj.isMultiplierUsed) {
+    donutCount += 1;
+  } else {
+    donutCount += donutMultiplierObj.multiplier;
   }
-
-  function enableMultiplierBtn() {
-    document.getElementById("purchaseDonutMultiplier").disabled = false;
+  counterDisplay.innerHTML = getDonutCount();
+  enablePurchaseButtons();
+  if (donutCount >= 5000) {
+    getJokeButton.disabled = false;
   }
+};
 
+function enablePurchaseButtons() {
+  if (donutCount >= donutMultiplierObj.price) {
+    enableMultiplierBtn();
+  } else {
+    purchaseMultiplierButton.disabled = true;
+  }
+  if (donutCount >= autoClickerObj.price) {
+    enableAutoClickerBtn();
+  } else {
+    purchaseAutoButton.disabled = true;
+  }
+  if (donutCount >= 5000) {
+    getJokeButton.disabled = false;
+  }
+}
 
+purchaseMultiplierButton.onclick = () => {
+  donutCount -= donutMultiplierObj.price;
+  donutMultiplierObj.purchaseMultiplier();
+  counterDisplay.innerHTML = getDonutCount();
+  multiplierCount.innerHTML = donutMultiplierObj.amount;
+  multiplierPrice.innerHTML = "Price: " + donutMultiplierObj.price;
+  donutMultiplierObj.enableMultiplierUse();
+  enablePurchaseButtons();
+};
 
-document.getElementById("addDonutButton").onclick = function addDonut(){
-    
-    if(!donutMultiplierObj.isMultiplierUsed){
-        donutCount += 1;
-    } else {
-        donutCount +=donutMultiplierObj.multiplier;
-    }
-    console.log('donut count = ' + donutCount);
-    document.getElementById("counter").innerHTML = getDonutCount();
+purchaseAutoButton.onclick = () => {
+  donutCount -= autoClickerObj.price;
+  autoClickerObj.purchaseAutoClicker();
+  counterDisplay.innerHTML = getDonutCount();
+  autoClickerCount.innerHTML = autoClickerObj.amount;
+  autoClickerPrice.innerHTML = "Price: " + autoClickerObj.price;
+  autoClickerObj.enableAutoClickerUse();
+  enablePurchaseButtons();
+};
+
+multiplierUseButton.onclick = () => {
+  donutMultiplierObj.useMultiplier();
+  multiplierCount.innerHTML = donutMultiplierObj.amount;
+  donutMultiplierObj.enableMultiplierUse();
+};
+
+autoClickUseButton.onclick = () => {
+  autoClickerObj.useAutoClicker();
+  autoClickerObj.enableAutoClickerUse();
+  autoClickerCount.innerHTML = autoClickerObj.amount;
+  counterDisplay.innerHTML = donutCount;
+
+  let myVar = setInterval(() => {
+    counterDisplay.innerHTML = donutCount;
     enablePurchaseButtons();
-    if(donutCount >= 5000){
-        document.querySelector('#getJoke').disabled=false;
-    }
-    
-}
-
-function enablePurchaseButtons(){
-    if(donutCount >= donutMultiplierObj.price){
-        enableMultiplierBtn();
+    if (donutMultiplierObj.isMultiplierUsed) {
+      donutCount += donutMultiplierObj.multiplier;
     } else {
-        document.getElementById("purchaseDonutMultiplier").disabled = true;
+      donutCount += 1;
     }
-    if(donutCount >= autoClickerObj.price){
-        enableAutoClickerBtn();
-    } else {
-        document.getElementById("purchaseAutoClicker").disabled = true;
-    }
-    if(donutCount >= 5000){
-        document.querySelector('#getJoke').disabled=false;
-    }
-}
+  }, 1000);
+};
 
-
-document.getElementById("purchaseDonutMultiplier").onclick = ()=> {
-    console.log('purchased multiplier')
-    donutCount -=donutMultiplierObj.price;
-    donutMultiplierObj.purchaseMultiplier();
-    document.getElementById("counter").innerHTML = getDonutCount();
-    document.getElementById("multiplierCount").innerHTML = donutMultiplierObj.amount;
-    document.querySelector("#multiplierPrice").innerHTML = 'Price: ' + donutMultiplierObj.price;
-    donutMultiplierObj.enableMultiplierUse();
-    enablePurchaseButtons();
-    
-}
-
-document.getElementById("purchaseAutoClicker").onclick = ()=> {
-    console.log('purchased autoclicker')
-    donutCount -=100;
-    autoClickerObj.purchaseAutoClicker();
-    document.getElementById("counter").innerHTML = getDonutCount();
-    document.getElementById("autoClickerCount").innerHTML = autoClickerObj.amount;
-    document.querySelector("#autoClickerPrice").innerHTML = 'Price: ' + autoClickerObj.price;
-    autoClickerObj.enableAutoClickerUse();
-    enablePurchaseButtons();
-    
-    
-}
-
-function checkPurchaseButtons(){
-    if(getDonutCount() < 10){
-        document.getElementById("purchaseDonutMultiplier").disabled = true;
-    } else {
-        document.getElementById("purchaseDonutMultiplier").disabled = false;
-    }
-
-    if(getDonutCount() < 100){
-        document.getElementById("purchaseAutoClicker").disabled = true;
-    } else {
-        document.getElementById("purchaseAutoClicker").disabled = false;
-    }
-}
-
-document.querySelector("#multiplierUseButton").onclick = ()=>{
-    console.log('multiplier used');
-    donutMultiplierObj.useMultiplier();
-    document.getElementById("multiplierCount").innerHTML = donutMultiplierObj.amount;
-    donutMultiplierObj.enableMultiplierUse();
-}
-
-document.querySelector("#autoClickerUseButton").onclick = () =>{
-    console.log('autoclicker used');
-    autoClickerObj.useAutoClicker();
-    autoClickerObj.enableAutoClickerUse();
-    document.querySelector("#autoClickerCount").innerHTML = autoClickerObj.amount;
-    document.getElementById("counter").innerHTML = donutCount;
-    console.log('donut count after clicker use ' +donutCount)
-    console.log('multiplier used? ' +donutMultiplierObj.isMultiplierUsed);
-    let myVar = setInterval(() => {
-        document.getElementById("counter").innerHTML = donutCount;
-        console.log('autoclick using!! count is ' + donutCount);
-        enablePurchaseButtons();
-        if(donutMultiplierObj.isMultiplierUsed){
-            donutCount +=donutMultiplierObj.multiplier;
-        } else {
-            donutCount+=1;
-        }
-        
-        
-    }, 1000);
-  
-   
-}
-
-function getDonutCount(){
-    return donutCount;
+function getDonutCount() {
+  return donutCount;
 }
 
 let userAction = async () => {
-    
-    console.log("getting joke! appjs")
-    let response = await fetch('https://icanhazdadjoke.com', {
-      method: 'GET',
-    //   body: myBody, // string or object
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    let myJson = await response.json(); //extract JSON from the http response
-    // do something with myJson
-    
-    let myJoke = myJson.joke;
-    
-    document.querySelector('#displayJoke').innerHTML=myJoke;
-    
+  console.log("getting joke! appjs");
+  let response = await fetch("https://icanhazdadjoke.com", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  let myJson = await response.json(); //extract JSON from the http response
+
+  let myJoke = myJson.joke;
+
+  document.querySelector("#displayJoke").innerHTML = myJoke;
+};
+
+getJokeButton.onclick = () => {
+  userAction();
+  donutCount -= 5000;
+  console.log(donutCount);
+  counterDisplay.innerHTML = donutCount;
+  if (donutCount < 5000) {
+    getJokeButton.disabled = true;
+  } else {
+    getJokeButton.disabled = false;
   }
+};
+
+document.querySelector("#jokePrice").innerHTML = "Price: 5000";
 
 
-
-//   document.querySelector('#getJoke').onclick=userAction;
-
-  document.querySelector('#getJoke').onclick= () =>{
-    userAction();
-      donutCount -=5000;
-      console.log(donutCount);
-      document.getElementById("counter").innerHTML = donutCount;
-      if(donutCount < 5000){
-        document.querySelector('#getJoke').disabled=true;
-      } else {
-        document.querySelector('#getJoke').disabled=false;
-      }
-  }
-
-  document.querySelector('#jokePrice').innerHTML=("Price: 5000")
- 
-
-
-
+let tacoGenerate = async () => {
+  let response = await fetch("http://taco-randomizer.herokuapp.com/random/", {
+    method: "GET",
+  });
+  let tacoJson = await response.json();
+  console.log(tacoJson);
+};
+tacoGenerate();
