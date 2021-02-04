@@ -3,7 +3,6 @@ import { autoClickerClass } from "./autoclicker.js";
 
 let donutMultiplierObj = new donutMultiplierClass(0, 10, 0);
 let autoClickerObj = new autoClickerClass(0, 100);
-
 let donutCount = 0;
 
 function disablePurchaseButtons() {
@@ -12,15 +11,18 @@ function disablePurchaseButtons() {
 }
 disablePurchaseButtons();
 
-//displays the counts on the page
+counterDisplay.innerHTML = getDonutCount();
 multiplierCount.innerHTML = donutMultiplierObj.amount;
 autoClickerCount.innerHTML = autoClickerObj.amount;
-
 autoClickerPrice.innerHTML = "Price: " + autoClickerObj.price;
 multiplierPrice.innerHTML = "Price: " + donutMultiplierObj.price;
-
-multiplierDisplay.innerHTML = "x" + donutMultiplierObj.multiplier;
+// multiplierDisplay.innerHTML = "x" + donutMultiplierObj.multiplier;
+multiplierDisplay.innerHTML = "x1";
 getJokeButton.disabled = true;
+totalMultipliersUsed.innerHTML =
+  "Total Multipliers used: " + donutMultiplierObj.numberOfMultipliersUsed;
+totalAutoClickersUsed.innerHTML =
+  "Total AutoClickers used: " + autoClickerObj.numberOfAutoClickersUsed;
 
 function enableAutoClickerBtn() {
   purchaseAutoButton.disabled = false;
@@ -92,7 +94,7 @@ autoClickUseButton.onclick = () => {
   counterDisplay.innerHTML = donutCount;
 
   let myVar = setInterval(() => {
-    counterDisplay.innerHTML = donutCount;
+    counterDisplay.innerHTML = getDonutCount();
     enablePurchaseButtons();
     if (donutMultiplierObj.isMultiplierUsed) {
       donutCount += donutMultiplierObj.multiplier;
@@ -103,7 +105,7 @@ autoClickUseButton.onclick = () => {
 };
 
 function getDonutCount() {
-  return donutCount;
+  return "Donut Count: " + donutCount;
 }
 
 let userAction = async () => {
@@ -132,9 +134,7 @@ getJokeButton.onclick = () => {
     getJokeButton.disabled = false;
   }
 };
-
 document.querySelector("#jokePrice").innerHTML = "Price: 5000";
-
 
 let tacoGenerate = async () => {
   let response = await fetch("http://taco-randomizer.herokuapp.com/random/", {

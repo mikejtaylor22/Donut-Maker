@@ -10,19 +10,33 @@
    
 </head>
 <body>
-    <nav class="navclass">
+    <!-- <nav id="menu">
         <ul>
             <li><a href="/fred.html">Fred the Baker Co.</a></li>
-            <li><a href="/inspiration.html">Inspiration</a></li>
+            <li><a href="https://orteil.dashnet.org/cookieclicker/" target="_blank">Inspiration</a></li>
             <li><a href="/contact.html">Contact</a></li>
         </ul>
+    </nav> -->
+
+    <nav>
+        <div class="dropdown">
+            <button class="dropbtn">Menu</button>
+            <div class="dropdown-content">
+              <a href="/fred.html">Fred the Baker Co.</a>
+              <a href="https://orteil.dashnet.org/cookieclicker/" target="_blank">Inspiration</a>
+              <a href="/contact.html">Contact</a>
+            </div>
+          </div>
     </nav>
 
     <div class="container">
         <div class="anchor"></div>
         <section>
             <p id="counter"></p>
-            <button type="submit" id="addDonutButton">Make Donut</button>
+            <label for="saveForm">Make Donut</label>
+            <input type="image" src="./src/images/donut.jpg" name="saveForm" class="btTxt" id="saveForm" />
+            <!-- <button type="submit" id="addDonutButton">Make Donut</button> -->
+           
             <span id="multiplierDisplay"></span>
            <br>
             <div class="container2">
@@ -33,20 +47,27 @@
             </div>
         </section>
         
+       
         <div class="inventory">
-            
-            <span>Number of Multipliers: </span>
+            <div class="invHeader">
+                <h3>Inventory:</h3>
+            </div>
+            <p>Number of Multipliers: </span>
             <span id="multiplierCount"></span>
             <br>
             <button class="toggleContent" id="multiplierUseButton">Use Multiplier</button>
-           
             <span>Number of Auto Clickers: </span>
             <span id="autoClickerCount"></span>
-            
             <button class="toggleContent" id="autoClickerUseButton">Use Auto Clicker</button>
+            
+            <div class="displayTotals">
+                <p class="totalMultipliersUsed">Total # of multiplers used:<p>
+                <p class="totalAutoClickersUsed">Total # of Autoclickers used:<p></p>
+            </div>
         </div>
     </div>
     <footer>
+        <button type="button" onclick="window.location.reload()">Restart game</button>
         <div class="jokeDiv">
             <button type="submit" id="getJoke">Get Joke</button>
             <br>
